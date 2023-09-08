@@ -71,8 +71,8 @@ export class AuthService {
         ...userData,
         estado: 'desconectado',
         otros_datos: JSON.stringify({}),
-        chat_info: JSON.stringify({"group_chats": ""}),
-        password: bcrypt.hashSync(password, 10),        
+        chat_info: JSON.stringify({ group_chats: '' }),
+        password: bcrypt.hashSync(password, 10),
       });
       await this.userRepository.save(user);
       delete user.password;
@@ -90,21 +90,21 @@ export class AuthService {
         where: { username },
       });
 
-      if (!user){
+      if (!user) {
         return this._commonService.badRequest(
           'autenticacion',
           'Credenciales no validas',
           'Credenciales no validas',
-        );                  
+        );
       }
-      
-      if (!bcrypt.compareSync(password, user.password)){
+
+      if (!bcrypt.compareSync(password, user.password)) {
         return this._commonService.badRequest(
           'autenticacion',
           'Credenciales no validas',
           null,
         );
-      }        
+      }
 
       if (user.status === false) {
         return this._commonService.badRequest(
@@ -121,18 +121,18 @@ export class AuthService {
       const id = user.id;
 
       delete user.password;
-      
+
       user.estado = 'en linea';
+      user.avatar = user.avatar.length === 0 ? null : user.avatar;
       user.chat_info = JSON.parse(user.chat_info);
 
       return { ...user, token: this.getJwtToken({ id }) };
-      
     } catch (err) {
       return this._commonService.internalRequest(
         'autenticacion',
         'Error de autenticacion, contacte al administrador',
         err,
-      );      
+      );
     }
   }
   async crearPrivilegio(createUserDto: CrearPrivilegio) {
@@ -186,7 +186,7 @@ export class AuthService {
         'CALL ver_user(?)',
         [JSON.stringify(objeto)],
       );
-
+      console.log(JSON.stringify(objeto));
       return { telefono: datos[0].tlf_trb, email: datos[0].email_trb };
     } catch (err) {
       this.handerDBException(err);
@@ -213,16 +213,15 @@ export class AuthService {
   }
   async retornarTodosUsuarios(user: User) {
     try {
-      const users = await this.userRepository.find({        
+      const users = await this.userRepository.find({
         where: [{ id: Not(user.id) }],
       });
 
-      users.map( user => { 
+      users.map((user) => {
         delete user.password;
         user.chat_info = JSON.parse(user.chat_info);
         user.otros_datos = JSON.parse(user.otros_datos);
-      })
-
+      });
 
       return { users };
     } catch (err) {
@@ -240,7 +239,7 @@ export class AuthService {
       this.handerDBException(err);
     }
   }
-  
+
   async checkAuthStatus(user: User, base: string) {
     //console.log({che:user})
 
@@ -251,7 +250,8 @@ export class AuthService {
     user.email = datos.email;
     user.telefono = datos.telefono;
     user.chat_info = JSON.parse(user.chat_info);
-    //delete user.id;
+    user.avatar = user.avatar.length === 0 ? null : user.avatar;
+    delete user.id;
 
     return { ...user, token: this.getJwtToken({ id }) };
   }

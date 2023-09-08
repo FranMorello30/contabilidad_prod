@@ -33,4 +33,16 @@ export class CuentaService {
       );
     }
   }
+  async retornarTodas() {
+    try {
+      const cuentas = await this.repository.find({});
+      return { cuentas };
+    } catch (error) {
+      return this._commonService.internalRequest(
+        'retotnar cuentas',
+        'Ups.. error al intentar retornar las cuentas, contacte al administrador',
+        error,
+      );
+    }
+  }
 }
