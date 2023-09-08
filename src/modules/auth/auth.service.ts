@@ -123,7 +123,7 @@ export class AuthService {
       delete user.password;
 
       user.estado = 'en linea';
-      user.avatar = user.avatar.length === 0 ? null : user.avatar;
+      //user.avatar = user.avatar.length === 0 ? null : user.avatar;
       user.chat_info = JSON.parse(user.chat_info);
 
       return { ...user, token: this.getJwtToken({ id }) };
@@ -250,7 +250,7 @@ export class AuthService {
     user.email = datos.email;
     user.telefono = datos.telefono;
     user.chat_info = JSON.parse(user.chat_info);
-    user.avatar = user.avatar.length === 0 ? null : user.avatar;
+    //user.avatar = user.avatar.length === 0 ? null : user.avatar;
     delete user.id;
 
     return { ...user, token: this.getJwtToken({ id }) };
