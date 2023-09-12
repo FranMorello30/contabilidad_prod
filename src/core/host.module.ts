@@ -77,7 +77,7 @@ export class HostModule {
         }
 
         try {
-          this.dataSource.getRepository(tenant.name);
+          //this.dataSource.getRepository(tenant.name);
           next();
         } catch (e) {
           const createdConnection: DataSource = new DataSource({
@@ -92,7 +92,8 @@ export class HostModule {
             synchronize: false,
           });
 
-          if (createdConnection) {
+          const conexion = createdConnection.initialize();
+          if (conexion) {
             next();
           } else {
             throw new BadRequestException(

@@ -14,11 +14,10 @@ export class CuentaService {
   constructor(
     @Inject(TENANT_CONNECTION) private readonly _dataSource: DataSource,
     private readonly _commonService: CommonService,
-  ) {
-    this.repository = this._dataSource.getRepository(Cuenta);
-  }
+  ) {}
 
   async crear(crearCuenta: CrearCuenta) {
+    this.repository = this._dataSource.getRepository(Cuenta);
     try {
       const cuenta = this.repository.create({
         ...crearCuenta,
@@ -34,6 +33,7 @@ export class CuentaService {
     }
   }
   async retornarTodas() {
+    this.repository = this._dataSource.getRepository(Cuenta);
     try {
       const cuentas = await this.repository.find({});
       return { cuentas };
