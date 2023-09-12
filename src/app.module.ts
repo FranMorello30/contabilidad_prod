@@ -47,16 +47,17 @@ import { CuentaModule } from './modules/cuentas/cuenta.module';
     }),
 
     ServeStaticModule.forRoot({
-      rootPath: 'public',
+      //rootPath: 'public',
+      rootPath: join(__dirname, '..', 'public'),
     }),
     HostModule,
     AuthModule,
     CuentaModule,
     DefinicionesModule,
-   
+
     MenuModule,
     MessagesWsModule,
-    
+
     UploadsModule,
     SearchModule,
   ],
