@@ -47,10 +47,10 @@ import { join } from 'path';
       },
     }),
 
-    ServeStaticModule.forRoot({
-      //rootPath: 'public',
-      rootPath: join(__dirname, '..', 'public'),
-    }),
+    // ServeStaticModule.forRoot({
+    //   //rootPath: 'public',
+    //   rootPath: join(__dirname, '..', 'public'),
+    // }),
     HostModule,
     AuthModule,
     CuentaModule,
