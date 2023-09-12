@@ -24,6 +24,7 @@ import { MessagesWsModule } from './messages-ws/messages-ws.module';
 import { Menu } from './modules/menu/entities/menu.entity';
 import { SearchModule } from './modules/search/search.module';
 import { CuentaModule } from './modules/cuentas/cuenta.module';
+import { join } from 'path';
 
 @Module({
   imports: [
